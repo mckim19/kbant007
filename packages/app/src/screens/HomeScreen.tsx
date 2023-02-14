@@ -77,7 +77,7 @@ export default function HomeScreen({ }) {
         setCount(count - 1);
     };
 
-    async function setSpringCount() {
+    async function getSpringCount() {
         setCount(data.count);
     }
 
@@ -90,13 +90,13 @@ export default function HomeScreen({ }) {
                 <Button title="Display Notification" onPress={() => onDisplayNotification()} />
             </View>
             <View>
-                <Button title="Get badge count" onPress={() => setSpringCount()} />
+                <Button title="Get badge count" onPress={() => getSpringCount()} />
             </View>
             <View>
                 <Button title="Set badge count" onPress={() => setBadgeCount()} />
             </View>
             <View>
-                <Text>{data.count}</Text>
+                <Text>{count}</Text>
             </View>
         </SafeAreaView>
 
