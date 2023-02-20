@@ -10,6 +10,7 @@
     "@react-native-async-storage/async-storage": "^1.17.11",
     "@tanstack/react-query": "^4.24.6",
     "msw": "^1.0.0",
+    "react-native-app-badge": "^0.1.5",
     "react-query": "^3.39.3"
   },
   "devDependencies": {

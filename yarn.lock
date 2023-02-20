@@ -2641,6 +2641,7 @@ __metadata:
     "@tanstack/react-query": ^4.24.6
     "@types/react-native": ^0.71.1
     msw: ^1.0.0
+    react-native-app-badge: ^0.1.5
     react-native-web: ^0.18.12
     react-query: ^3.39.3
   languageName: unknown
@@ -3433,6 +3434,18 @@ __metadata:
     react: ">=16.0"
     react-native: ">=0.57"
   checksum: 246bcd94a6a2cafc415c7a192fb5a76ef7cd9b648b47ea4b2366f06128376ab377dcff3fab676261050fd3a97324bde5d64802aa3e8d1580fe6c0e3b0138cefc
+  languageName: node
+  linkType: hard
+
+"@react-native-community/push-notification-ios@npm:^1.2.0":
+  version: 1.10.1
+  resolution: "@react-native-community/push-notification-ios@npm:1.10.1"
+  dependencies:
+    invariant: ^2.2.4
+  peerDependencies:
+    react: ">=16.6.3"
+    react-native: ">=0.58.4"
+  checksum: 64de91355791618f770057a903e3004b76d0f627e8db1477add81091db7e9675ef8d9a0fea6f20b7d166701a8b193f4e87396ae95c6778f42ca7bf3055d3e901
   languageName: node
   linkType: hard
 
@@ -20983,6 +20996,17 @@ __metadata:
   version: 3.0.4
   resolution: "react-lifecycles-compat@npm:3.0.4"
   checksum: a904b0fc0a8eeb15a148c9feb7bc17cec7ef96e71188280061fc340043fd6d8ee3ff233381f0e8f95c1cf926210b2c4a31f38182c8f35ac55057e453d6df204f
+  languageName: node
+  linkType: hard
+
+"react-native-app-badge@npm:^0.1.5":
+  version: 0.1.5
+  resolution: "react-native-app-badge@npm:0.1.5"
+  dependencies:
+    "@react-native-community/push-notification-ios": ^1.2.0
+  peerDependencies:
+    react-native: ">=0.50.0"
+  checksum: 5db6aef276cb2583e354a128d147431edbb00cb0137f07e0753766eec67bef28bba26bc9580e1d9fb45cb1e3b8194a05c67e652415d1c13311bf318c8d7986d4
   languageName: node
   linkType: hard
 

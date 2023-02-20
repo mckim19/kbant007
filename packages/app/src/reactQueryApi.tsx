@@ -4,7 +4,7 @@ import { response } from 'msw';
 import MenuItem from 'react-native-paper/lib/typescript/components/Menu/MenuItem';
 import { Int32 } from 'react-native/Libraries/Types/CodegenTypes';
 
-const springUrl = 'http://172.28.213.59:8080/api/count';
+const springUrl = 'http://172.28.212.103:8080/api/count';
 export const getBadgeCountUsingAxios = async () => {
     const response = await axios.get(springUrl);
     return response.data;
@@ -12,6 +12,7 @@ export const getBadgeCountUsingAxios = async () => {
 
 export const useBadgeCountUsingReactQuery = () => {
     const { data } = useQuery(['outputCount'], getBadgeCountUsingAxios);
+    console.log("useBadgeCountUsingReactQuery");
     console.log({ data });
     return { data };
 };
