@@ -14,7 +14,7 @@ import notifee from '@notifee/react-native';
 import {useBadgeCountUsingReactQuery, usetBadgeCountUsingAxios} from '../reactQueryApi';
 import {useMutation} from '@tanstack/react-query';
 
-export default function HomeScreen({}) {
+export default function CountNoti({}) {
     //const navigation = useNavigation();
     const [count, setCount] = useState(0);
     const badgeMutation = useMutation(['badgeMutation'], usetBadgeCountUsingAxios);
@@ -72,7 +72,6 @@ export default function HomeScreen({}) {
     }
 
     if (data){
-        console.log("data logic")
         return (
             <SafeAreaView style={styles.root}>
                 <Badges></Badges>
@@ -87,7 +86,6 @@ export default function HomeScreen({}) {
                             : '#FFFFFF'
                     }}>
                     <Text style={styles.text}>Set badge count</Text>
-                    <Button title={'SignIn'} onpress={signIn}></Button>
                     <Button title="Display Notification" onPress={() => onDisplayNotification()}/>
                     <Button title="Get badge count" onPress={() => getSpringCount()}/>
                     <Button title="Set badge count" onPress={() => setBadgeCount()}/>
@@ -96,10 +94,9 @@ export default function HomeScreen({}) {
                     <Text style={styles.text}>{data}</Text>
                 </View>
             </SafeAreaView>
-    
+
         );
     } else {
-        console.log("else---")
         return (
             <SafeAreaView style={styles.root}>
                 <Badges></Badges>
@@ -126,10 +123,10 @@ export default function HomeScreen({}) {
                     <Text style={styles.text}>{count}</Text>
                 </View>
             </SafeAreaView>
-    
+
         );
     }
-    
+
 
 }
 
