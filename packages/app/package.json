@@ -14,6 +14,8 @@
     "@tanstack/react-query": "^4.24.6",
     "@walletconnect/react-native-dapp": "^1.8.0",
     "crypto": "^1.0.1",
+    "eslint": "^8.34.0",
+    "ethers": "^5.7.0",
     "events": "^3.3.0",
     "metro-react-native-babel-preset": "^0.75.0",
     "msw": "^1.0.0",

@@ -14,10 +14,21 @@ import {checkMemberAxios, checkMemberInfo} from "../reactQueryApi";
 import MetaMaskSDK from '@metamask/sdk';
 import BackgroundTimer from 'react-native-background-timer';
 import {ethers} from 'ethers';
+
 import {Colors} from "react-native/Libraries/NewAppScreen";
+const MMSDK = new MetaMaskSDK({
+    openDeeplink: (link) => {
+        Linking.openURL(link); // Use React Native Linking method or your favourite way of opening deeplinks
+    },
+    timer: BackgroundTimer, // To keep the app alive once it goes to background
+    dappMetadata: {
+        name: 'My App', // The name of your application
+        url: 'https://myapp.com', // The url of your website
+    },
+});
 
-
-
+const ethereum = MMSDK.getProvider();
+//const provider = new ethers.providers.Web3Provider(ethereum);
 
 export default function Index() {
     const [id, setId] = useState('');
@@ -25,11 +36,12 @@ export default function Index() {
     const navigation = useNavigation();
     //const { mutate, isLoading, isError, error, isSuccess }
     const loginMutation = useMutation(["loginMutation"], checkMemberAxios);
-    // const [response, setResponse] = useState('');
+
     const [account, setAccount] = useState();
-    // const [chain, setChain] = useState('');
-    // const [balance, setBalance] = useState('');
-    //
+    //const [balance, setBalance] = useState();
+    const [chain, setChain] = useState();
+    const [response, setResponse] = useState();
+
     const signIn = () => {
         const result = checkMemberInfo(id, password);
 
@@ -56,23 +68,7 @@ export default function Index() {
             },
         );
     };
-    //
-    //
-    // ////////////////////////////////////////////////////////////////////////
-    //
-    //
-    //
-    // const isDarkMode = useColorScheme() === 'dark';
-    //
-    // const backgroundStyle = {
-    //     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-    // };
-    // const textStyle = {
-    //     color: isDarkMode ? Colors.lighter : Colors.darker,
-    //     margin: 10,
-    //     fontSize: 16,
-    // };
-    //
+
     // const getBalance = async () => {
     //     if (!ethereum.selectedAddress) {
     //         return;
@@ -80,7 +76,7 @@ export default function Index() {
     //     const bal = await provider.getBalance(ethereum.selectedAddress);
     //     setBalance(ethers.utils.formatEther(bal));
     // };
-    //
+
     // useEffect(() => {
     //     ethereum.on('chainChanged', chain => {
     //         console.log(chain);
@@ -93,31 +89,19 @@ export default function Index() {
     //         getBalance();
     //     });
     // }, []);
-    //
-    const MMSDK = new MetaMaskSDK({
-        openDeeplink: (link) => {
-            Linking.openURL(link); // Use React Native Linking method or your favourite way of opening deeplinks
-        },
-        timer: BackgroundTimer, // To keep the app alive once it goes to background
-        dappMetadata: {
-            name: 'My App', // The name of your application
-            url: 'https://myapp.com', // The url of your website
-        },
-    });
 
-    const ethereum = MMSDK.getProvider();
     const connect = async () => {
         try {
             const result = await ethereum.request({method: 'eth_requestAccounts'});
             console.log('try');
             console.log('RESULT', result?.[0]);
-            //setAccount(result?.[0]);
-            // getBalance();
+            setAccount(result?.[0]);
+            //getBalance();
         } catch (e) {
             console.log('catch ERROR', e);
         }
     };
-    //
+
     // const exampleRequest = async () => {
     //     try {
     //         const result = await ethereum.request({
@@ -138,7 +122,7 @@ export default function Index() {
     //         console.log('ERROR', e);
     //     }
     // };
-    //
+
     // const sign = async () => {
     //     const msgParams = JSON.stringify({
     //         domain: {
@@ -217,28 +201,28 @@ export default function Index() {
     //     const resp = await ethereum.request({method, params});
     //     setResponse(resp);
     // };
-    //
-    // const sendTransaction = async () => {
-    //     const to = '0x0000000000000000000000000000000000000000';
-    //     const transactionParameters = {
-    //         to, // Required except during contract publications.
-    //         from: ethereum.selectedAddress, // must match user's active address.
-    //         value: '0x5AF3107A4000', // Only required to send ether to the recipient from the initiating external account.
-    //     };
-    //
-    //     try {
-    //         // txHash is a hex string
-    //         // As with any RPC call, it may throw an error
-    //         const txHash = await ethereum.request({
-    //             method: 'eth_sendTransaction',
-    //             params: [transactionParameters],
-    //         });
-    //
-    //         setResponse(txHash);
-    //     } catch (e) {
-    //         console.log(e);
-    //     }
-    // };
+
+    const sendTransaction = async () => {
+        const to = '0x0000000000000000000000000000000000000000';
+        const transactionParameters = {
+            to, // Required except during contract publications.
+            from: ethereum.selectedAddress, // must match user's active address.
+            value: '0x000000000001', // Only required to send ether to the recipient from the initiating external account.
+        };
+
+        try {
+            // txHash is a hex string
+            // As with any RPC call, it may throw an error
+            const txHash = await ethereum.request({
+                method: 'eth_sendTransaction',
+                params: [transactionParameters],
+            });
+            console.log(txHash)
+            setResponse(txHash);
+        } catch (e) {
+            console.log(e);
+        }
+    };
 
 
     return (
@@ -256,21 +240,22 @@ export default function Index() {
                         onChangeText={ (text) => setPassword(text)}></TextInput>
                 </View>
                 <View>
-                    <Button title={'SignIn'} onPress={signIn}></Button>
-                    <Button title={'Connect'} onPress={connect} />
+                    <Button title='SignIn' onPress={signIn}></Button>
+                    <Button title={account ? 'Connected' : 'Connect'} onPress={connect} />
                     {/*<Button title="Sign" onPress={sign} />*/}
-                    {/*<Button title="Send transaction" onPress={sendTransaction} />*/}
+                    <Button title="Send transaction" onPress={sendTransaction} />
                     {/*<Button title="Add chain" onPress={exampleRequest} />*/}
 
-                    {/*<Text style={textStyle}>{chain && `Connected chain: ${chain}`}</Text>*/}
-                    {/*<Text>*/}
-                    {/*    {account && `Connected account: ${account}\n\n`}*/}
-                    {/*    /!*{account && balance && `Balance: ${balance} ETH`}*!/*/}
-                    {/*</Text>*/}
-                    {/*<Text style={textStyle}>*/}
-                    {/*    {' '}*/}
-                    {/*    {response && `Last request response: ${response}`}*/}
-                    {/*</Text>*/}
+                    {/*<Text>{chain && `Connected chain: ${chain}`}</Text>*/}
+                    <Text>
+                        {' '}
+                        {account && `Connected account: ${account}\n\n`}
+                        {/*{account && balance && `Balance: ${balance} ETH`}*/}
+                    </Text>
+                    <Text>
+                        {' '}
+                        {response && `Last request response: ${response}`}
+                    </Text>
                 </View>
             </SafeAreaView>
 
