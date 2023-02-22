@@ -59,6 +59,7 @@
     "events": "^3.3.0",
     "http-proxy-middleware": "^2.0.6",
     "is-arrayish": "^0.3.2",
+    "klip-sdk": "^2.2.0",
     "msw": "^1.0.0",
     "process": "^0.11.10",
     "react": "^18.2.0",
